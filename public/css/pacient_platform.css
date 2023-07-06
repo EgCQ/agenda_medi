@@ -1,0 +1,50 @@
+.not_appareance{
+    appearance: auto;
+    width: 100%;
+
+}
+input[type='radio']:not(:checked) + label{
+    background-color: gray;
+    content: '';
+    color: white;
+    visibility: visible;
+}
+input[type='radio']:checked + label{
+    border-radius: 15px;
+    background-color: green;
+    content: '';
+    font-size: 15px;
+    color: white;
+    visibility: visible;
+    transition: 0.3s all;
+}
+        #section{
+        transition: 0.5s all !important;
+    }
+@media screen and (max-width: 1220px) {
+    #section{
+        transition: .5s all !important;
+        flex-wrap: wrap;
+    }
+    #section .conts, #section .div_table{
+        width: 100% !important;
+    }
+}
+@media screen and (min-width: 2775px) {
+    #section{
+        flex-wrap: wrap !important;
+    }
+    #section .conts{
+        width: 100% !important;
+    }
+    #section #table{
+        width: 75% !important;
+    }
+    #section .div_table{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100% !important;
+    }
+}

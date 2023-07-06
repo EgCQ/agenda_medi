@@ -1,0 +1,14 @@
+.div_btn_register{
+    width: 60% !important;
+
+}
+.btn_register{
+    transition: 0.6s all;
+    text-decoration-style:double;
+    color:red;
+}
+.btn_register:hover{
+    transition: 0.6s all !important;
+    color: black !important;
+    text-decoration-style: wavy !important;
+}
