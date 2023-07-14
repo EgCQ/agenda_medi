@@ -4,8 +4,13 @@ use App\Http\Controllers\authentications;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\RolesController;
 use App\Models\area_medica;
+use App\Models\cita_medica;
 use App\Models\doctor_area_medica;
 use App\Models\User;
+use App\Models\form1;
+use App\Models\form2;
+use App\Models\form3;
+
 use Illuminate\Support\Facades\Route;
 use App\Models\user_roles;
 use Illuminate\Http\Request;
@@ -53,14 +58,17 @@ Route::get('/home', function (Request $request) {
         return view('pacientes.platform_paciente', ['departamentos' => $departamentos]);
     }
 })
-->middleware("auth")
+->middleware(["auth", "verified"])
 ->name('home');
+
+
+
 
 Route::get('/get_doctors_departament/{id}', function (Request $request, $id) {
     if ($request->ajax()) {
         $doctor_area = DB::table('doctor_area_medicas')
         ->leftJoin('users', 'users.id', '=', 'doctor_area_medicas.id_doctor')
-        ->select('users.name as name')
+        ->select('users.id as id','users.name as name')
         ->where('doctor_area_medicas.id_area_medica', $id)
         ->get();
         return response()->json($doctor_area);
@@ -96,12 +104,39 @@ Route::post('/departamento_agregado', function(){
         'nombre_area' => request('nombre_area'),
         'descripcion' => request('descripcion'),
     ]);
-
     return redirect('area_medica');
 })
 ->name('departamento_agregado')
 ->middleware('isAdmin');
 
+Route::get('/view_cita_medica', function(){
+    $paciente = Auth::id();
+
+    $cita_medica = cita_medica::all();
+    $citas_medicas = DB::table('cita_medicas')
+        ->Join('users', 'users.id', '=', 'cita_medicas.id_doctor')
+        ->Join('area_medicas','area_medicas.id', '=', 'cita_medicas.id_area_medica')
+        ->where('cita_medicas.id_paciente', $paciente)
+        ->select('cita_medicas.fecha_hora_atencion','users.name as name', 'area_medicas.nombre_area')
+        ->get();
+    return $citas_medicas;
+});
+
+Route::post('/submit_cita_medica', function(){
+    $area_medi = request('area');
+    $doctor = request('doctor_area_medicas');
+    $paciente = Auth::id();
+    $hora_atencion = request('checkbox');
+    cita_medica::create([
+        'fecha_hora_atencion' => $hora_atencion,
+        'id_area_medica' => $area_medi,
+        'id_paciente' => $paciente,
+        'id_doctor' => $doctor,
+    ]);
+
+    return redirect('home');
+})
+->name('submit_cita_medica');
 
 Route::get('/doctor_area/{id}', function($id){
     $doctor_area = DB::table('doctor_area_medicas')
@@ -139,6 +174,113 @@ Route::delete('/doctor_area_eliminado/{id}', function($id){
     $id_area = request('id_area_medica');
 
 })->middleware('isAdmin')->name('doctor_area.deleted');
+
+//Form 1
+Route::get('/form1', function () {
+    $user = Auth::user()->id;
+    $form1 = DB::select("select * from form1 where id_user = $user");
+    if ($form1) {
+        return redirect('form2');
+    } else {
+        return view('forms.form1');
+    }
+    // return $user;
+})->middleware('auth')->name('form1');
+
+Route::post('/post_form1', function () {
+    $user = Auth::user()->id;
+    $desc = request('descripcion');
+    // $form1 = DB::select("select * from form1 where id_user = $user");
+
+    // if ($form1) {
+    //     return redirect('form2');
+    // } else {
+    DB::insert('insert into form1 (descripcion, id_user) values (?, ?)', [$desc, $user]);
+    return redirect('form2');
+    // }
+    // form1::create([
+    //     'descripcion' => $desc,
+    //     'id_user' => $user,
+    // ]);
+})->middleware('auth')->name('form1.store');
+
+//Form 2
+Route::get('/form2', function () {
+    $user = Auth::user()->id;
+    $form1 = DB::select("select * from form1 where id_user = $user");
+    $form2 = DB::select("select * from form2 where id_user = $user");
+
+    if ($form1) {
+        if ($form2) {
+            return redirect('form3');
+        } else {
+            return view('forms.form2');
+        }
+    } else {
+        return redirect('form1');
+    }
+
+})->middleware('auth')->name('form2');
+
+Route::post('/post_form2', function () {
+    $user = Auth::user()->id;
+    $desc = request('descripcion');
+    // $form2 = DB::select("select * from form2 where id_user = $user");
+
+    // if ($form2) {
+    //     return redirect('form3');
+    // } else {
+    DB::insert('insert into form2 (descripcion, id_user) values (?, ?)', [$desc, $user]);
+    return redirect('form3');
+    // }
+})->middleware('auth')->name('form2.store');
+
+//Form 3
+Route::get('/form3', function () {
+    $user = Auth::user()->id;
+    $form2 = DB::select("select * from form2 where id_user = $user");
+    $form3 = DB::select("select * from form3 where id_user = $user");
+
+    // if ($form2) {
+    //     return view('forms.form3');
+
+    // } else {
+    //     return redirect('form2');
+    // }
+    if ($form2) {
+        if ($form3) {
+            return redirect('finished_forms');
+        } else {
+            return view('forms.form3');
+        }
+    } else {
+        return redirect('form2');
+    }
+    // $form3 = form3::all()->where('id_user', $user);
+    // return view('forms.form3');
+    // return $user;
+})->middleware('auth')->name('form3');
+
+Route::post('/post_form3', function () {
+    $user = Auth::user()->id;
+    $desc = request('descripcion');
+    // $form3 = DB::select("select * from form3 where id_user = $user");
+
+    // if ($form3) {
+    //     return redirect('form3');
+    // } else {
+    DB::insert('insert into form3 (descripcion, id_user) values (?, ?)', [$desc, $user]);
+    return redirect('finished_forms');
+    // }
+})->name('form3.store');
+
+//Finish forms
+Route::get('/finished_forms', function(){
+    return view('finished');
+})->name('finished_forms');
+
+
+
 
 
 Route::post('/createRole', [RolesController::class, 'create'])->middleware(['auth'])->name('createRole');

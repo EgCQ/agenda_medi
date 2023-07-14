@@ -2,6 +2,9 @@
 var table = document.getElementById('table');
 var num_hora = document.getElementById('num_hora');
 
+
+
+
 var table2 = document.getElementById('semana');
 var dias1 = document.getElementById('dias');
 var horario = document.getElementById('horario');
@@ -60,7 +63,18 @@ for (let i3 = 0; i3 < 12; i3++) {
         p.innerHTML = para1_0;
         p3.innerHTML = para2_0;    }
 }
+
+var dt = new Date();
+var dt_day = dt.getDate();
+
 for (let i = 0; i < dias.length; i++) {
+
+    var dt_date_Day = dt.getUTCDate();
+    var dt_date_date = dt.getUTCDay();
+    var dt_Days = dt_day+i+2;
+    console.log(dt_Days);
+    var dt_month = dt.getMonth() + 1;
+    var dt_year = dt.getFullYear();
     const element = dias[i];
     console.log(element);
     const tables3 = dias1[i];
@@ -83,16 +97,25 @@ for (let i = 0; i < dias.length; i++) {
 
     for (let i2 = 0; i2 < 12; i2++) {
         var div3 = document.createElement('div');
-
+        
         var checkbox = document.createElement('input');
         var label = document.createElement('label');
         checkbox.setAttribute('type', 'radio');
-        checkbox.setAttribute('id', 'checkbox'+(i2+1)+element+'[]');
-        checkbox.setAttribute('name', 'checkbox'+element);
+        checkbox.setAttribute('id', ('checkbox'+(i2+1)+element+'[]'));
+        checkbox.setAttribute('name', 'checkbox');
         checkbox.style.opacity = "0";
         checkbox.style.width = "0px";
         checkbox.style.height = "0px";
-        checkbox.value = (i2+7);
+        checkbox.value = dt_year + '-0'+dt_month+'-'+dt_Days+" "+(i2+7)+":00";
+        // var full_date2 = {
+        //     dia: dt_day,
+        //     mes: dt_month,
+        //     anio: dt_year
+        // }
+        // // console.log(dt_months);
+        // console.log(full_date2);
+
+
         if (checkbox.value <= 9) {
             checkbox.value = "0"+(i2+7)+":00";
         }

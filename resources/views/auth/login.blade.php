@@ -24,7 +24,6 @@
                         <a href="{{ route('register.index') }}" class="btn_register">
                             <h3 class="btn_reg">Crear cuenta</h3>
                         </a>
-
                     </div>
                 </div>
                 <div class="bg-primary" style="width: 100%">
@@ -35,15 +34,19 @@
                         <div class="my-4 mx-3">
                             <i class="fas fa-at"></i>
                         </div>
-                        <input type="email" class="form-control w-100 m-1" name="email" id="email" placeholder="Ingresa un correo electrónico">
+                        <input type="email" class="form-control w-100 m-1" name="email" id="email" placeholder="Ingresa un correo electrónico" required>
                     </div>
                     <div class="d-flex w-100">
                         <div class="my-4 mx-3">
                             <i class="fas fa-key"></i>
                         </div>
-                        <input type="password" class="form-control w-100 m-1" name="password" id="password" placeholder="Escribe una contraseña">
+                        <input type="password" class="form-control w-100 m-1" name="password" id="password" placeholder="Escribe una contraseña" required>
                     </div>
-
+                    <div class="d-flex w-100">
+                        <a href="{{ route('register.index') }}" class="my-4 mx-5 text-white text-decoration-none btns">
+                            <h5 class="btn_reg">Olvidé mi contraseña</h5>
+                        </a>
+                    </div>
                     <div class="w-100 p-2">
                         <button type="submit" class="btn btn-success form-control">Entrar</button>
                     </div>

@@ -3,12 +3,12 @@
 
 }
 .btn_register{
-    transition: 0.6s all;
+    transition: 0.4s all;
     text-decoration-style:double;
     color:red;
 }
-.btn_register:hover{
-    transition: 0.6s all !important;
+.btn_register:hover, .btns:hover{
+    transition: 0.4s all !important;
     color: black !important;
     text-decoration-style: wavy !important;
 }

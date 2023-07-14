@@ -6,7 +6,7 @@
     <style>
         .btn_login{
             transition: 0.6s all;
-            text-decoration-style:double; 
+            text-decoration-style:double;
             color:red;
         }
         .btn_login:hover{
@@ -34,7 +34,7 @@
             <div class="bg-white p-4">
                 <h1>Hola mundo</h1>
                 <h3>¿Ya tienes una cuenta?, inicia sesión aquí.</h3>
-                <a href="{{ route('login') }}" class="btn_login"><h3 class="btn_reg">Entrar</h3></a>
+                <a href="{{ route('login') }}" class="btn_login"><h3 class="btn_reg">Acceder</h3></a>
 
             </div>
             <div style="display:flex; width:100%; justify-content:space-evenly;">
@@ -47,30 +47,43 @@
                             <i class="fas fa-user"></i>
                         </div>
                         <div style="width: 50%; margin-right:0.5rem">
-                            <input type="text" class="form-control" name="name" style="width: 100%" id="name" placeholder="Escribe tus nombres">
+                            <input type="text" class="form-control" name="name" style="width: 100%" value="{{ old('name') }}" id="name" placeholder="Escribe tus nombres" required>
                         </div>
                         <div style="width: 50%">
-                            <input type="text" class="form-control" name="lastname" style="width: 100%" id="lastname" placeholder="Escribe tus apellidos">
+                            <input type="text" class="form-control" name="lastname" style="width: 100%" id="lastname" value="{{ old('lastname') }}" placeholder="Escribe tus apellidos" required>
                         </div>
                     </div>
                     <div class="d-flex m-2">
                         <div class="m-2">
                             <i class="fas fa-at"></i>
                         </div>
-                        <input type="email" class="form-control" style="width: 100%" name="email" id="email" placeholder="Ingresa un correo electrónico">
+                        <input type="email" class="form-control" style="width: 100%" name="email" id="email" value="{{ old('email') }}" placeholder="Ingresa un correo electrónico" required>
                     </div>
+                    <div class="d-flex m-2">
+
+                        <div class="m-2">
+                            <i class="fas fa-key"></i>
+                        </div>
+
+                        <input type="password" class="form-control @error('password') is-invalid @enderror"  style="width: 100%" name="password" id="pass" placeholder="Escribe una contraseña" required autocomplete="current-password">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
                     <div class="d-flex m-2">
                         <div class="m-2">
                             <i class="fas fa-key"></i>
                         </div>
-                        <input type="password" class="form-control" style="width: 100%" name="password" id="pass" placeholder="Escribe una contraseña">
+                        <input id="password" type="password"  class="form-control @error('password') is-invalid @enderror" autocomplete="current-password" style="width: 100%" name="password_confirmation" placeholder="Escribe una contraseña" required>
                     </div>
-            
                     <div class="m-2">
                         <button type="submit" class="btn btn-success form-control">Registrar</button>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </main>

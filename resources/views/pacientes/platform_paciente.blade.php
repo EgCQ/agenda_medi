@@ -12,7 +12,8 @@
 @section('content')
 <main class="main d-flex w-100 pt-1" style="flex-wrap: nowrap; justify-content:center; height: 85vh;">
     <div class="d-flex justify-content-between" id="main-class" style="width:90%;">
-        <form action="" method="post" class="bg-white w-100" style="height: fit-content;">
+        <form action="{{ route('submit_cita_medica') }}" method="post" class="bg-white w-100" style="height: fit-content;">
+            @csrf
             <section class="bg-white w-100 d-flex" style="height: fit-content;"  id="section">
                 <div class="w-75 p-4 conts">
                     <h2>Generar cita medica</h2>
@@ -20,7 +21,7 @@
                         <h3>Area medica</h3>
 
                         <select name="area" class="form-control not_appareance" id="area">
-                            <option value="0">Seleccionar área medica</option>
+                            <option value="">Seleccionar área medica</option>
                             {{-- @if(isset($response->records)) --}}
                                 @foreach ($departamentos as $departamento)
                                     <option value="{{$departamento->id}}">{{ $departamento->nombre_area }}</option>
@@ -31,7 +32,7 @@
                     <article>
                         <h3>Doctores</h3>
                         {!! Form::select('doctor_area_medicas', ['placeholder'=>'Seleccionar medico'],
-                        null, ['id'=>'medico', 'class' =>'form-control not_appareance']) !!}
+                        null, ['id'=>'medico', 'class' =>'form-control not_appareance', 'disabled']) !!}
                     </article>
                 </div>
                 <div class="div_table">
@@ -84,29 +85,71 @@
             <h4>
                 Historial de mis citas medicas
             </h4>
+            <div id="div_historial_cita" class="table-striped p-1 rounded">
+                <div class="d-flex w-100 justify-content-between bg-secondary p-1">
+                    <span>Doctor</span>
+                    <span>Area</span>
+                </div>
+
+            </div>
         </aside>
     </div>
 
     <script>
-    $('#area').change(function(event) {
-        $.get("/get_doctors_departament/"+event.target.value+"", function(response, area) {
-            // console.log(response);
+    // $.get("/view_cita_medica", function (response) {
+    //     $('#div_historial_cita').append("<a>Hola mundo</a>");
 
-            $('#medico').empty(); //limpiar componente medico
+    // });
+    const isObjectEmpty = (objectName) => {
+        return Object.keys(objectName).length === 0
+    }
+    var url = "http://127.0.0.1:8000/view_cita_medica";
+    var div_historial_cita = document.getElementById('div_historial_cita');
+    fetch(url)
+        .then(function(response) {
+            return response.json();
+        })
+        .then((response) => {
+            response.forEach(element => {
 
-            for (let i = 0; i < response.length; i++) {
-                    if (response[i].length < 1) {
-                        $('#medico').append("<option>Seleccionar medico</option>");
+                console.log(element);
+                var ela = document.createElement("a");
+                var elspan = document.createElement("span");
+                var elspan2 = document.createElement("span");
 
-                    }
-                    $('#medico').append("<option>Seleccionar medico</option>");
+                div_historial_cita.append(ela);
+                ela.append(elspan);
+                ela.append(elspan2);
 
-                    $('#medico').append("<option value='"+response[i].id+"'>"+response[i].name+"</option>");
+                ela.setAttribute('href', url);
+                ela.classList.add('d-flex', 'w-100', 'justify-content-between', 'bg-white', 'text-decoration-none', 'text-black', 'p-1');
+                elspan.innerText = element.name;
+                elspan2.innerText = element.nombre_area;
 
-
-            }
+            });
 
         });
+    $('#area').change(function(event) {
+
+        if (event.target.value) {
+            $.get("/get_doctors_departament/"+event.target.value+"", function(response) {
+                // console.log(response);
+                var medico = document.getElementById("medico");
+                medico.disabled = false;
+                $('#medico').empty(); //limpiar componente medico
+                if (isObjectEmpty(response)) {
+                    $('#medico').append("<option>Seleccionar medico</option>");
+                    medico.disabled = true;
+                }
+                for (let i = 0; i < response.length; i++) {
+
+                    $('#medico').append("<option>Seleccionar medico</option>");
+                    console.log(response[i].id, response[i].name);
+                    $('#medico').append("<option value='"+response[i].id+"'>"+response[i].name+"</option>");
+                }
+            });
+        }
+
     });
 
     // $('#area').change(event => {
