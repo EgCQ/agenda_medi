@@ -1,6 +1,6 @@
 @extends('layout.layout_guest')
 
-@section('title', 'Laravel')
+@section('title', 'AgenMedi')
 
 
 @section('nav')

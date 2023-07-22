@@ -43,7 +43,7 @@
                         <input type="password" class="form-control w-100 m-1" name="password" id="password" placeholder="Escribe una contraseña" required>
                     </div>
                     <div class="d-flex w-100">
-                        <a href="{{ route('register.index') }}" class="my-4 mx-5 text-white text-decoration-none btns">
+                        <a href="{{ route('password.request') }}" class="my-4 mx-5 text-white text-decoration-none btns">
                             <h5 class="btn_reg">Olvidé mi contraseña</h5>
                         </a>
                     </div>

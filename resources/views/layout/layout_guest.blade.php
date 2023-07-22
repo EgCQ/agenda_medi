@@ -23,16 +23,43 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script> --}}
     <title>@yield('title')</title>
+    <style>
+        .actived{
+            background-color: yellow !important;
+            animation: scaled 0.5s;
+        }
+        @keyframes scaled {
+            0%{
+                scale: 1;
+            }
+            50%{
+                scale: 1.5;
 
+            }
+            100%{
+                scale: 1;
+
+            }
+        }
+    </style>
     @yield('css')
 
 </head>
 <body  style="background-image: none; background-color: rgb(207, 207, 207);">
     @yield('nav')
+
+
     @yield('content')
 
 </body>
 <!-- Scripts -->
 @yield('js')
+<script>
+    $(document).ready(function () {
+        var path = location.pathname.lenght ? location.pathname : window.location.href;
+        $('.actived').removeClass('actived');
+        $("#nav--primary").find('a[href*="'+path+'"]').addClass("actived");
+    });
+</script>
 
 </html>

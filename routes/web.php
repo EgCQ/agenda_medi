@@ -43,9 +43,9 @@ Route::get('/inicial', function () {
 Route::get('/home', function (Request $request) {
     $idRolUser = user_roles::where('id_user', Auth::id())->get();
 
-    if (($idRolUser[0]->id_rol) == 1) {
+    if (($idRolUser[0]->id_rol) == 2) {
         return view('doctores.platform_doctor');
-    } else {
+    } if (($idRolUser[0]->id_rol) == 3) {
         $departamentos = area_medica::all();
         // $departamentos = DB::table('doctor_area_medicas')
         // ->select('id_doctor as doctor, id_area_medica as area')
@@ -56,6 +56,9 @@ Route::get('/home', function (Request $request) {
         //                 ->join('users', 'users.id', '=', 'doctor_area_medicas.id_doctor')
         //                 ->get();
         return view('pacientes.platform_paciente', ['departamentos' => $departamentos]);
+    } else{
+        return view('doctores.platform_doctor');
+
     }
 })
 ->middleware(["auth", "verified"])
@@ -92,7 +95,8 @@ Route::get('/area_medica/{id}', function($id){
 ->middleware('isAdmin');
 
 Route::get('/usuario_doctor', function(){
-    $user_doctor = doctor_area_medica::all('id_doctor');
+    // $user_doctor = doctor_area_medica::all('id_doctor');
+    $user_doctor = DB::select("select id_doctor from doctor_area_medica");
     $users = user::whereNotIn('id', $user_doctor)->get();
     return $users;
 
@@ -153,12 +157,10 @@ Route::post('/doctor_area_agregado', function(Request $request){
     $id_doctor = $request->id_doctor;
     $user = user_roles::where('id_user', $id_doctor)->first();
     $id_area = request('id_area_medica');
-    doctor_area_medica::create([
-        'id_doctor' => $id_doctor,
-        'id_area_medica' => request('id_area_medica'),
-    ]);
+    DB::insert("insert into doctor_area_medica (id_doctor, id_area_medica) values (?, ?) ",[$id_doctor, request('id_area_medica')]);
+
     $role_edit = $user->update([
-        'id_rol' => 1,
+        'id_rol' => 2,
     ]);
     return redirect()->route('area_medica.view', [$id_area]);
 })->middleware('auth')->name('doctor_area.add');

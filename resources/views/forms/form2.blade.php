@@ -9,6 +9,11 @@
 {{-- <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet"> --}}
 
 @section('content')
+    <div class="d-flex" id="nav--primary">
+        <a href="{{ route('form1') }}" style="background-color:red; width: 20px !important; height:20px !important; border-radius: 50%;" class="m-2 actived"></a>
+        <a href="{{ route('form2') }}" style="background-color:red; width: 20px !important; height:20px !important; border-radius: 50%;" class="m-2"></a>
+        <a href="{{ route('form3') }}" style="background-color:red; width: 20px !important; height:20px !important; border-radius: 50%;" class="m-2"></a>
+    </div>
 <form action="{{ route('form2.store') }}" method="post">
     @csrf
     <div class="d-flex flex-column justify-content-center align-items-center" style="height: 85vh;">

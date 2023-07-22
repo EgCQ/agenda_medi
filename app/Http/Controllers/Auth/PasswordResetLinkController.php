@@ -33,7 +33,7 @@ class PasswordResetLinkController extends Controller
         ],
         [
             'email.email' => 'El campo email debe de ser un email',
-            'email.required' => 'El email no debe de estar vacio',     
+            'email.required' => 'El email no debe de estar vacio',
         ]);
 
         // We will send the password reset link to this user. Once we have attempted
@@ -43,9 +43,8 @@ class PasswordResetLinkController extends Controller
             $request->only('email')
         );
 
-        return $status == Password::RESET_LINK_SENT
-                    ? back()->with('status', __($status))
-                    : back()->withInput($request->only('email'))
-                            ->withErrors(['email' => __($status)]);
+        return $status === Password::RESET_LINK_SENT
+                        ? back()->with(['status' => __($status)])
+                        : back()->withErrors(['email' => __($status)]);
     }
 }
