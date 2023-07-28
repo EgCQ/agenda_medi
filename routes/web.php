@@ -42,9 +42,10 @@ Route::get('/inicial', function () {
 
 Route::get('/home', function (Request $request) {
     $idRolUser = user_roles::where('id_user', Auth::id())->get();
-
+    $user = Auth::user()->id;
+    $form1 = DB::select("select * from form1 where id_user = $user");
     if (($idRolUser[0]->id_rol) == 2) {
-        return view('doctores.platform_doctor');
+        return view('doctores.platform_doctor', ['form1' => $form1]);
     } if (($idRolUser[0]->id_rol) == 3) {
         $departamentos = area_medica::all();
         // $departamentos = DB::table('doctor_area_medicas')
@@ -281,9 +282,38 @@ Route::get('/finished_forms', function(){
     return view('finished');
 })->name('finished_forms');
 
+//Edit form1
+Route::get('/view_form1', function(){
+    $user = Auth::user()->id;
+    $form1 = DB::select("select * from form1 where id_user = $user");
+    return view('forms.form1_edit', ['form1' => $form1]);
+})->name('form1.viewOne');
 
+Route::post('/edited_form1', function($id){
 
+    return view('forms.form1_edit');
+})->name('form1.edit');
 
+//Edit form2
+Route::get('/view_form2', function(){
+    $user = Auth::user()->id;
+    $form2 = DB::select("select * from form2 where id_user = $user");
+    return view('forms.form2_edit', ['form2' => $form2]);
+})->name('form2.viewOne');
+
+Route::post('/edited_form2', function($id){
+
+    return view('forms.form1_edit');
+})->name('form2.edit');
+//Edit form3
+Route::get('/view_form3', function(){
+    $user = Auth::user()->id;
+    $form3 = DB::select("select * from form3 where id_user = $user");
+    return view('forms.form3_edit', ['form3' => $form3]);
+})->name('form3.viewOne');
+Route::post('/edited_form3', function($id){
+    // return view('forms.form1_edit');
+})->name('form3.edit');
 
 Route::post('/createRole', [RolesController::class, 'create'])->middleware(['auth'])->name('createRole');
 
