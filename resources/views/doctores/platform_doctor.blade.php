@@ -14,20 +14,23 @@
             {{ $item1->descripcion }}
         @endforeach --}}
         <div class="">
-        <div class="d-flex">
-            <p>Formulario 1</p>
-            <a href="{{ route('form1.viewOne') }}">Editar</a>
-        </div>
-        <div class="d-flex">
-            <p>Formulario 2</p>
-            <a href="{{ route('form2.viewOne') }}">Editar</a>
+            <div>
+                <a href="{{ route('generate-report') }}" class="btn btn-primary">Generar PDF</a>
+            </div>
+            <div class="d-flex">
+                <p>Formulario 1</p>
+                <a href="{{ route('form1.viewOne') }}">Editar</a>
+            </div>
+            <div class="d-flex">
+                <p>Formulario 2</p>
+                <a href="{{ route('form2.viewOne') }}">Editar</a>
 
-        </div>
-        <div class="d-flex">
-            <p>Formulario 3</p>
-            <a href="{{ route('form3.viewOne') }}">Editar</a>
+            </div>
+            <div class="d-flex">
+                <p>Formulario 3</p>
+                <a href="{{ route('form3.viewOne') }}">Editar</a>
 
-        </div>
+            </div>
         </div>
 
     @else

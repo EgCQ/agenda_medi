@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\authentications;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RolesController;
 use App\Models\area_medica;
 use App\Models\cita_medica;
@@ -31,6 +32,9 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function () {
     return view('welcome');
 })->name('/');
+
+
+Route::get('/generate-report', [ReportController::class, 'generateReport'])->name("generate-report");
 
 Route::get('/inicial', function () {
     $roles = user_roles::all();

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9547a94ae364e4ab01044c9ec3755f02",
+    "content-hash": "8fbef50efa71f0148d1b6479150f7898",
     "packages": [
         {
             "name": "brick/math",
@@ -1417,53 +1417,29 @@
             "time": "2023-02-15T16:40:09+00:00"
         },
         {
-            "name": "laravelcollective/html",
-            "version": "v6.4.0",
+            "name": "lavela/phpjasper",
+            "version": "v3.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/LaravelCollective/html.git",
-                "reference": "ac74f580459a5120079b8def0404e5d312a09504"
+                "url": "https://github.com/lavela/phpjasper.git",
+                "reference": "d3d7bbc7d1d78766dd5c554189ba1680b9b0517a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/LaravelCollective/html/zipball/ac74f580459a5120079b8def0404e5d312a09504",
-                "reference": "ac74f580459a5120079b8def0404e5d312a09504",
+                "url": "https://api.github.com/repos/lavela/phpjasper/zipball/d3d7bbc7d1d78766dd5c554189ba1680b9b0517a",
+                "reference": "d3d7bbc7d1d78766dd5c554189ba1680b9b0517a",
                 "shasum": ""
             },
             "require": {
-                "illuminate/http": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/routing": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/session": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/support": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "illuminate/view": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "php": ">=7.2.5"
+                "php": ">=7.0"
             },
             "require-dev": {
-                "illuminate/database": "^6.0|^7.0|^8.0|^9.0|^10.0",
-                "mockery/mockery": "~1.0",
-                "phpunit/phpunit": "~8.5|^9.5.10"
+                "phpunit/phpunit": "^6.1"
             },
             "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "6.x-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Collective\\Html\\HtmlServiceProvider"
-                    ],
-                    "aliases": {
-                        "Form": "Collective\\Html\\FormFacade",
-                        "Html": "Collective\\Html\\HtmlFacade"
-                    }
-                }
-            },
             "autoload": {
-                "files": [
-                    "src/helpers.php"
-                ],
                 "psr-4": {
-                    "Collective\\Html\\": "src/"
+                    "PHPJasper\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1472,21 +1448,21 @@
             ],
             "authors": [
                 {
-                    "name": "Adam Engebretson",
-                    "email": "adam@laravelcollective.com"
-                },
-                {
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
+                    "name": "Leandro Cintra Bitencourt",
+                    "email": "leandrobitencourt.ti@gmail.com",
+                    "role": "lead"
                 }
             ],
-            "description": "HTML and Form Builders for the Laravel Framework",
-            "homepage": "https://laravelcollective.com",
+            "description": "Gerador de relatórios PHP",
+            "keywords": [
+                "pdf",
+                "relatórios"
+            ],
             "support": {
-                "issues": "https://github.com/LaravelCollective/html/issues",
-                "source": "https://github.com/LaravelCollective/html"
+                "issues": "https://github.com/lavela/phpjasper/issues",
+                "source": "https://github.com/lavela/phpjasper/tree/v3.0"
             },
-            "time": "2023-02-13T18:15:35+00:00"
+            "time": "2018-03-07T17:22:33+00:00"
         },
         {
             "name": "league/commonmark",
