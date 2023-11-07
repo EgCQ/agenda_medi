@@ -12,7 +12,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 
@@ -38,24 +40,46 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        // $valide = Validator::make(request()->all(),
+        // [   'name' => 'required',
+        //     'lastname' =>'required',
+        //     'email' => 'required|email|unique:users,email,email',
+        //     'password' => 'required|confirmed',
+        // ]);
+        // if ($valide->fails()) {
+        //     return redirect()->back()->withInput();
+        // }
         request()->validate([
             'name' => 'required',
-            'email' => 'required|email',
+            'lastname' =>'required',
+            'email' => 'required|email|unique:users,email,email',
             'password' => 'required|confirmed',
         ]);
-        $user = User::create([
-               'name' => request('name'),
-                'email' => request('email'),
+        $email = request('email');
+        $query = DB::select("select * from users where email = '$email'");
+        // $user_query = $query[0]->email;
+        $count_user = count($query);
+
+        // if ($count_user >= 1){
+        //     return redirect()->back()->with("error", "Este usuario ya esta registrado");
+        // } else {
+            $user = User::create([
+                'name' => request('name'),
+                'email' => $email,
                 'password' => request('password'),
             ]);
-        $user2 = request('lastname');
-        auth()->login($user);
+            $user2 = request('lastname');
+            auth()->login($user);
 
-        PersonaController::inicialCreate($user, $user2);
+            PersonaController::inicialCreate($user, $user2);
 
-        UserRolesController::create($user);
+            UserRolesController::create($user);
 
-        return redirect(RouteServiceProvider::HOME);
+            return redirect(RouteServiceProvider::HOME)->with("success", "Registro exitoso");
+            // return "Registro exitoso";
+        // }
+
+
 
     }
 }

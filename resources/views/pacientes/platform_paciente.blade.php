@@ -10,6 +10,14 @@
 @endsection
 
 @section('content')
+@if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block m-0" id="">
+        <div style="display:flex;" class="align-items-center">
+            <strong class="p-2">{{ $message }}</strong>
+            <button type="button" class="btn btn-danger close" id="btn_close" data-dismiss="alert">×</button>	
+        </div>
+    </div>
+@endif
 <main class="main d-flex w-100 pt-1" style="flex-wrap: nowrap; justify-content:center; height: 85vh;">
     <div class="d-flex justify-content-between" id="main-class" style="width:90%;">
         <form action="{{ route('submit_cita_medica') }}" method="post" class="bg-white w-100" style="height: fit-content;">

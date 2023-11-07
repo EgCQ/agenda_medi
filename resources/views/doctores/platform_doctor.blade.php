@@ -8,7 +8,15 @@
 
 @section('content')
 <div class="d-flex justify-content-center align-items-center" style="height: 90vh;">
+@if ($message = Session::get('success'))
+    <div class="alert alert-success alert-block m-0" id="">
+        <div style="display:flex;" class="align-items-center">
+            <strong class="p-2">{{ $message }}</strong>
+            <button type="button" class="btn btn-danger close" id="btn_close" data-dismiss="alert">×</button>	
+        </div>
+    </div>
 
+@endif
     @if ($form1)
         {{-- @foreach ($form1 as $item1)
             {{ $item1->descripcion }}
